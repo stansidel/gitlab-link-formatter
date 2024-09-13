@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MenuBarView: View {
     @EnvironmentObject private var viewModel: ContentViewModel
+    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         VStack {
@@ -30,6 +31,10 @@ struct MenuBarView: View {
                     Button("Copy") { viewModel.copyMessageToClipboard() }
                     Button("Reset") { viewModel.resetMessage() }
                 }
+            }
+            HStack {
+                Button("Open App") { viewModel.showAppWindow(action: openWindow) }
+                Button("Quit") { viewModel.quitApp() }
             }
         }
         .padding()

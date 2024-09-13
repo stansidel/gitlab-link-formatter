@@ -71,6 +71,18 @@ final class ContentViewModel: ObservableObject {
         }
     }
 
+    func quitApp() {
+        NSApplication.shared.terminate(nil)
+    }
+
+    func showAppWindow(action: OpenWindowAction) {
+        if let window = NSApplication.shared.windows.first(where: { $0.isVisible && $0.level == .normal }) {
+            window.makeKeyAndOrderFront(nil)
+        } else {
+            action(id: GitLab_Link_FormatterApp.id)
+        }
+    }
+
     func onUrlChanged() {
         isUrlEdited = true
     }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ParsedLinkType {
+enum ParsedLinkType: Hashable, Equatable {
     case mergeRequest(ParsedMRInfo)
     case unknown(String)
 }
@@ -17,6 +17,13 @@ struct ParsedMRInfo {
     let group: String
     let project: String
     let mrNumber: String
+}
+
+extension ParsedMRInfo: Hashable, Equatable {
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(url)
+    }
 }
 
 protocol LinkParserProtocol {

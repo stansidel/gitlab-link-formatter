@@ -42,6 +42,8 @@ final class GPBMessageBuilder: MessageBuilderProtocol {
     }
 
     func add(link: ParsedLinkType) {
+        guard !links.contains(link) else { return }
+
         links.append(link)
     }
 

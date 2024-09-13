@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         if let button = statusItem?.button {
-            button.image = NSImage(systemSymbolName: "star", accessibilityDescription: "Menu Bar Item")
+            button.image = NSImage(systemSymbolName: "bolt", accessibilityDescription: "GitLab Link Formatter ")
             button.action = #selector(menuBarItemClicked)
         }
     }
@@ -32,5 +32,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let button = statusItem?.button {
             popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
         }
+    }
+
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return false
     }
 }
