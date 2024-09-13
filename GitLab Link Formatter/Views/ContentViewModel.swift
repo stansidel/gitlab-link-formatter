@@ -56,6 +56,14 @@ final class ContentViewModel: ObservableObject {
         )
     }
 
+    func onAppAppear() {
+        NSApp.setActivationPolicy(.regular)
+    }
+
+    func onAppDisappear() {
+        NSApp.setActivationPolicy(.accessory)
+    }
+
     func onAppear() {
         if !isUrlEdited || gitLabURL.isEmpty {
             let clipboardContent = getClipboardString()
@@ -79,6 +87,7 @@ final class ContentViewModel: ObservableObject {
         if let window = NSApplication.shared.windows.first(where: { $0.isVisible && $0.level == .normal }) {
             window.makeKeyAndOrderFront(nil)
         } else {
+            NSApp.setActivationPolicy(.regular)
             action(id: GitLab_Link_FormatterApp.id)
         }
     }

@@ -50,10 +50,10 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            viewModel.onAppear()
+            viewModel.onAppAppear()
         }
         .onDisappear() {
-            viewModel.onDisappear()
+            viewModel.onAppDisappear()
         }
     }
 }
