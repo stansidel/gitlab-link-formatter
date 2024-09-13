@@ -8,14 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var viewModel = ContentViewModel()
+    @EnvironmentObject private var viewModel: ContentViewModel
 
     var body: some View {
         VStack {
             Text("Hello, world!")
             TextField("Enter GitLab URL", text: $viewModel.gitLabURL)
+                .onSubmit {
+                    viewModel.formatAndCopy()
+                }
+                .onKeyPress() { _ in
+                    viewModel.onUrlChanged()
+                    return .ignored
+                }
             HStack {
-                Button("Format") {  viewModel.formatAndCopy() }
+                Button("Format & Copy") {  viewModel.formatAndCopy() }
                 Button("Add to Message") { viewModel.addToMessage() }
             }
             if !viewModel.message.characters.isEmpty {
@@ -41,6 +48,12 @@ struct ContentView: View {
                     .transition(.move(edge: .bottom))
                     .frame (maxHeight: .infinity, alignment: .bottom)
             }
+        }
+        .onAppear {
+            viewModel.onAppear()
+        }
+        .onDisappear() {
+            viewModel.onDisappear()
         }
     }
 }

@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct GitLab_Link_FormatterApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MenuBarView()
+                .environmentObject(appDelegate.contentViewModel)
         }
     }
 }

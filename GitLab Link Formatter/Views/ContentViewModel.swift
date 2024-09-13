@@ -17,6 +17,16 @@ final class ContentViewModel: ObservableObject {
     private let messageBuilder: MessageBuilderProtocol = GPBMessageBuilder()
     private let pasteBoard: NSPasteboard = NSPasteboard.general
 
+    init() {
+        print(">>>> ContentViewModel inited")
+    }
+
+    private var isUrlEdited = false {
+        didSet {
+            print(">>>> isUrlEdited: \(isUrlEdited)")
+        }
+    }
+
     func formatAndCopy() {
         let formattedURL = formatter.format(link: gitLabURL)
         setClipboardString(toAttributedString(formattedURL))
@@ -48,8 +58,25 @@ final class ContentViewModel: ObservableObject {
         )
     }
 
+    func onAppear() {
+        if !isUrlEdited || gitLabURL.isEmpty {
+            gitLabURL = getClipboardString()
+        }
+    }
+
+    func onDisappear() {
+        if !isUrlEdited {
+            gitLabURL.removeAll()
+        }
+    }
+
+    func onUrlChanged() {
+        isUrlEdited = true
+    }
+
     private func clearUrl() {
         gitLabURL = ""
+        isUrlEdited = false
     }
 
     private func getClipboardString() -> String {
