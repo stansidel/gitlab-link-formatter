@@ -11,15 +11,12 @@ final class ContentViewModel: ObservableObject {
 
     @Published var gitLabURL = ""
     @Published var message: AttributedString = ""
+    @Published var shortMessage: String = ""
     @Published var copiedToClipboard = false
 
     private let parser: LinkParserProtocol = LinkParser()
     private let messageBuilder: MessageBuilderProtocol = GPBMessageBuilder()
     private let pasteBoard: NSPasteboard = NSPasteboard.general
-
-    init() {
-        print(">>>> ContentViewModel inited")
-    }
 
     private var isUrlEdited = false
 
@@ -31,15 +28,19 @@ final class ContentViewModel: ObservableObject {
     }
 
     func addToMessage() {
+        guard parser.isLink(gitLabURL) else { return }
+        
         let parsedLink = parser.parse(link: gitLabURL)
         messageBuilder.add(link: parsedLink)
         message = toAttributedString(messageBuilder.message)
+        shortMessage = buildShortMessage()
         clearUrl()
     }
 
     func resetMessage() {
         messageBuilder.clear()
         message = ""
+        shortMessage = ""
     }
 
     func copyMessageToClipboard() {
@@ -109,6 +110,10 @@ final class ContentViewModel: ObservableObject {
                 self.copiedToClipboard = false
             }
         }
+    }
 
+    private func buildShortMessage() -> String {
+        let linksCount = messageBuilder.linksCount
+        return "Collected \(linksCount) \(linksCount == 1 ? "MR" : "MRs")"
     }
 }

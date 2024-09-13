@@ -7,6 +7,7 @@
 
 protocol MessageBuilderProtocol {
     var message: String { get }
+    var linksCount: Int { get }
 
     func format(link: ParsedLinkType) -> String
     func add(link: ParsedLinkType)
@@ -19,7 +20,7 @@ final class GPBMessageBuilder: MessageBuilderProtocol {
     var message: String {
         guard !links.isEmpty else { return "" }
 
-        let introPhrase = "Посмотрите, пожалуйста"
+        let introPhrase = "Посмотрите, пожалуйста,"
         if links.count == 1 {
             return "\(introPhrase) MR — \(format(link: links[0]))"
         }
@@ -28,6 +29,8 @@ final class GPBMessageBuilder: MessageBuilderProtocol {
         let linksStirng = links.map { "* \(format(link: $0))" }.joined(separator: "\n")
         return "\(introString)\n\n\(linksStirng)"
     }
+
+    var linksCount: Int { links.count }
 
     func format(link: ParsedLinkType) -> String {
         switch link {

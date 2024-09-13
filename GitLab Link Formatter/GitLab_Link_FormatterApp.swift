@@ -13,7 +13,7 @@ struct GitLab_Link_FormatterApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MenuBarView()
+            ContentView()
                 .environmentObject(appDelegate.contentViewModel)
         }
     }
