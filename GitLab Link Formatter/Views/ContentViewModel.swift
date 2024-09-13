@@ -21,11 +21,7 @@ final class ContentViewModel: ObservableObject {
         print(">>>> ContentViewModel inited")
     }
 
-    private var isUrlEdited = false {
-        didSet {
-            print(">>>> isUrlEdited: \(isUrlEdited)")
-        }
-    }
+    private var isUrlEdited = false
 
     func formatAndCopy() {
         let formattedURL = formatter.format(link: gitLabURL)

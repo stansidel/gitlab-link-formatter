@@ -16,14 +16,9 @@
 			path = "GitLab Link Formatter";
 			sourceTree = "<group>";
 		};
-		950F80312C942C57008506BF /* LinkFormatter */ = {
+		950F80482C944DC8008506BF /* Libs */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = LinkFormatter;
-			sourceTree = "<group>";
-		};
-		950F80382C94328E008506BF /* MessageBuilder */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MessageBuilder;
+			path = Libs;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -42,8 +37,7 @@
 		950F80152C942C26008506BF = {
 			isa = PBXGroup;
 			children = (
-				950F80382C94328E008506BF /* MessageBuilder */,
-				950F80312C942C57008506BF /* LinkFormatter */,
+				950F80482C944DC8008506BF /* Libs */,
 				950F80202C942C26008506BF /* GitLab Link Formatter */,
 				950F801F2C942C26008506BF /* Products */,
 			);
@@ -74,8 +68,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				950F80202C942C26008506BF /* GitLab Link Formatter */,
-				950F80312C942C57008506BF /* LinkFormatter */,
-				950F80382C94328E008506BF /* MessageBuilder */,
+				950F80482C944DC8008506BF /* Libs */,
 			);
 			name = "GitLab Link Formatter";
 			packageProductDependencies = (
