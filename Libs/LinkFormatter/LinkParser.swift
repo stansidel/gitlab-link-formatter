@@ -20,6 +20,7 @@ struct ParsedMRInfo {
 }
 
 protocol LinkParserProtocol {
+    func isLink(_ link: String) -> Bool
     func parse(link: String) -> ParsedLinkType
 }
 
@@ -29,6 +30,10 @@ final class LinkParser: LinkParserProtocol {
 
     init(wordsCapitalizer: WordsCapitalizer = EnglishWordsCapitalizer()) {
         self.wordsCapitalizer = wordsCapitalizer
+    }
+
+    func isLink(_ link: String) -> Bool {
+        link.starts(with: "http")
     }
 
     func parse(link: String) -> ParsedLinkType {

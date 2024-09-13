@@ -57,7 +57,10 @@ final class ContentViewModel: ObservableObject {
 
     func onAppear() {
         if !isUrlEdited || gitLabURL.isEmpty {
-            gitLabURL = getClipboardString()
+            let clipboardContent = getClipboardString()
+            if parser.isLink(clipboardContent) {
+                gitLabURL = clipboardContent
+            }
         }
     }
 
