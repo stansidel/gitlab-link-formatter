@@ -13,7 +13,7 @@ final class ContentViewModel: ObservableObject {
     @Published var message: AttributedString = ""
     @Published var copiedToClipboard = false
 
-    private let formatter: LinkFormatterProtocol = LinkFormatter()
+    private let parser: LinkParserProtocol = LinkParser()
     private let messageBuilder: MessageBuilderProtocol = GPBMessageBuilder()
     private let pasteBoard: NSPasteboard = NSPasteboard.general
 
@@ -24,14 +24,15 @@ final class ContentViewModel: ObservableObject {
     private var isUrlEdited = false
 
     func formatAndCopy() {
-        let formattedURL = formatter.format(link: gitLabURL)
+        let parsedLink = parser.parse(link: gitLabURL)
+        let formattedURL = messageBuilder.format(link: parsedLink)
         setClipboardString(toAttributedString(formattedURL))
         clearUrl()
     }
 
     func addToMessage() {
-        let formattedURL = formatter.format(link: gitLabURL)
-        messageBuilder.add(link: formattedURL)
+        let parsedLink = parser.parse(link: gitLabURL)
+        messageBuilder.add(link: parsedLink)
         message = toAttributedString(messageBuilder.message)
         clearUrl()
     }

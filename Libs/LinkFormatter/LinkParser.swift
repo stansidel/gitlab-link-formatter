@@ -1,5 +1,5 @@
 //
-//  LinkFormatter.swift
+//  LinkParser.swift
 //  GitLab Link Formatter
 //
 //  Created by Stan Sidel Work on 9/13/24.
@@ -7,11 +7,23 @@
 
 import Foundation
 
-protocol LinkFormatterProtocol {
-    func format(link: String) -> String
+enum ParsedLinkType {
+    case mergeRequest(ParsedMRInfo)
+    case unknown(String)
 }
 
-final class LinkFormatter: LinkFormatterProtocol {
+struct ParsedMRInfo {
+    let url: String
+    let group: String
+    let project: String
+    let mrNumber: String
+}
+
+protocol LinkParserProtocol {
+    func parse(link: String) -> ParsedLinkType
+}
+
+final class LinkParser: LinkParserProtocol {
 
     private let wordsCapitalizer: WordsCapitalizer
 
@@ -19,20 +31,15 @@ final class LinkFormatter: LinkFormatterProtocol {
         self.wordsCapitalizer = wordsCapitalizer
     }
 
-    func format(link: String) -> String {
-        guard let mrInfo = parseMR(from: link) else { return link }
+    func parse(link: String) -> ParsedLinkType {
+        guard let mrInfo = parseMR(from: link) else {
+            return .unknown(link)
+        }
 
         let group = wordsCapitalizer.capitalizeWords(in: mrInfo.group)
         let project = wordsCapitalizer.capitalizeWords(in: mrInfo.project)
 
-        return "[#\(mrInfo.mrNumber) for \(project) in \(group)](\(mrInfo.url))"
-    }
-
-    private struct ParsedMRInfo {
-        let url: String
-        let group: String
-        let project: String
-        let mrNumber: String
+        return .mergeRequest(ParsedMRInfo(url: link, group: group, project: project, mrNumber: mrInfo.mrNumber))
     }
 
     private func parseMR(from link: String) -> ParsedMRInfo? {
