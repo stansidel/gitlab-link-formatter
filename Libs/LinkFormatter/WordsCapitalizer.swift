@@ -21,6 +21,7 @@ final class EnglishWordsCapitalizer: WordsCapitalizer {
         "gazprombank": false,
         "services": false,
         "core": false,
+        "DesignSystem": true,
     ]
 
     private var commonWords = Set<String>()
